@@ -22,7 +22,6 @@ def get_current_user(
             detail="Invalid or expired token"
         )
 
-    # "sub" alanını al (user_id)
     user_id_str = payload.get("sub")
 
     if user_id_str is None:
@@ -31,7 +30,6 @@ def get_current_user(
             detail="Invalid token payload"
         )
 
-    # User_id'yi integer'a çevir (eğer string ise)
     try:
         user_id = int(user_id_str)
     except (ValueError, TypeError):
@@ -40,7 +38,6 @@ def get_current_user(
             detail="Invalid user ID in token"
         )
 
-    # Kullanıcıyı database'den al
     user = db.query(User).filter(User.id == user_id).first()
 
     if user is None:
